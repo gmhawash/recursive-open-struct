@@ -1,10 +1,13 @@
 require 'ostruct'
 
 class RecursiveOpenStruct < OpenStruct
-  VERSION = "0.5.0"
+  VERSION = "0.5.2"
+  class << self
+    attr_accessor :recurse_over_arrays
+  end
 
   def initialize(h=nil, args={})
-    @recurse_over_arrays = args.fetch(:recurse_over_arrays,false)
+    @recurse_over_arrays = args.fetch(:recurse_over_arrays,false) || self.class.recurse_over_arrays
     super(h)
     @sub_elements = {}
   end
